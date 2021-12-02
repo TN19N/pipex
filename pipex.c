@@ -5,28 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 08:13:05 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/02 08:18:27 by mannouao         ###   ########.fr       */
+/*   Created: 2021/12/02 15:19:43 by mannouao          #+#    #+#             */
+/*   Updated: 2021/12/02 16:57:41 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int ac, char *av[], char *env[])
+char *find_path(char *file)
 {
-	if(ac > 1)
-	{
-		char *full_path;
-		char *mini_path;
 	
-		full_path = get_path(env);
-		if(!full_path)
-			return (1);
-		mini_path = check_if_access(full_path, av[1]);
-		if(!mini_path)
-			printf("cmd not find :(\n");
-		else
-			printf("{%s}\n", mini_path);
-	}
-	return (0);
+}
+
+int main(int argc, char *argv[], char *envp[])
+{
+	char **commands1;
+	char **commands2;
+	char *file1_path;
+	char *path1,
+	char *path2;
+	char *pwd;
+	
+	if(argc != 5)
+		return (1);
+	commands1 = ft_split(argv[2], ' ');
+	commands2 = ft_split(argv[3], ' ');
+	file1_path = find_path(argv[1]);
+	path1 = get_path(envp, "PATH=", commands1[0]);
+	path2 = get_path(envp, "PATH=", commands2[0]);
+	pwd = get_path(envp, "PWD=");
 }

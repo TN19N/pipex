@@ -5,29 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 08:11:02 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/02 08:20:56 by mannouao         ###   ########.fr       */
+/*   Created: 2021/12/02 17:02:42 by mannouao          #+#    #+#             */
+/*   Updated: 2021/12/02 17:03:46 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_strjoin(char *saver, char *buff)
+char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*str;
 	int		i;
 
-	str = malloc(sizeof(char) * (ft_strlen(saver) + ft_strlen(buff) + 1));
+	str = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
 	i = 0;
-	while (saver[i])
+	while (str1[i])
 	{
-		str[i] = saver[i];
+		str[i] = str1[i];
 		i++;
 	}
-	while (*buff)
+	while (*str2)
 	{
-		str[i] = *buff;
-		buff++;
+		str[i] = *str2;
+		str2++;
 		i++;
 	}
 	str[i] = '\0';
