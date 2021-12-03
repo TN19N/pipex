@@ -5,27 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/02 07:23:30 by mannouao          #+#    #+#              #
-#    Updated: 2021/12/02 08:23:21 by mannouao         ###   ########.fr        #
+#    Created: 2021/12/02 17:20:35 by mannouao          #+#    #+#              #
+#    Updated: 2021/12/03 11:24:35 by mannouao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-SRCS = check_if_access.c\
-		ft_split.c\
+SRCS = ft_split.c\
 		ft_strjoin.c\
 		ft_strlen.c\
 		get_path.c\
 		pipex.c
+
+OBJS = $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean :
-	@rm -f $(NAME)
+	rm -f $(OBJS)
 
-re : clean all
+fclean : clean
+	rm -f $(NAME)
+
+re : fclean all

@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 08:47:33 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/02 16:13:12 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/03 14:29:14 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static char	*word(char const *s, char c)
 	i = 0;
 	len_word = ft_len_word(s, c);
 	str = (char *)malloc(sizeof(char) * (len_word + 1));
-	if (str == NULL)
-		return (0);
+	if (!str)
+		return (NULL);
 	while (len_word > i)
 	{
 		str[i] = *s;
@@ -89,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	c_words = ft_c_words(s, c);
 	strings = (char **)malloc(sizeof(char *) * (c_words + 1));
 	if (!strings)
-		return (0);
+		error_function();
 	while (*s)
 	{
 		if (*s && *s == c)
@@ -98,7 +98,7 @@ char	**ft_split(char const *s, char c)
 		{
 			strings[i] = word(s, c);
 			if (free_tab(strings, i))
-				return (0);
+				error_function();
 			i++;
 		}
 		while (*s && *s != c)
