@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 16:33:57 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/03 14:33:28 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:51:14 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,19 @@ char	*get_path(char **envp, char *to_find, char *cmd_or_file)
 	len = ft_strlen(to_find);
 	full_path = get_full_path(envp, to_find);
 	if (!full_path)
-		error_function();
+		error_function(NULL, NULL);
 	if (len == 5)
 	{
 		pathes = ft_split(full_path + len, ':');
 		the_path = find_the_path(pathes, cmd_or_file);
 		if (!the_path)
-			error_function();
+			error_function(NULL, NULL);
 	}
 	else
 	{
 		full_path = ft_strjoin(full_path, "/");
+		if (!full_path)
+			error_function(NULL, NULL);
 		the_path = ft_strjoin(full_path + len, cmd_or_file);
 	}
 	return (the_path);

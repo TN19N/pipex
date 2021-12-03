@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 17:02:42 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/03 14:29:52 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:09:00 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(char *str1, char *str2)
 	int		i;
 
 	if(!str1 || !str2)
-		error_function();
+		error_function(NULL, NULL);
 	str = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
 	i = 0;
 	while (str1[i])

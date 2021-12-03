@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 08:47:33 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/03 14:29:14 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/03 15:09:32 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	c_words = ft_c_words(s, c);
 	strings = (char **)malloc(sizeof(char *) * (c_words + 1));
 	if (!strings)
-		error_function();
+		error_function(NULL, NULL);
 	while (*s)
 	{
 		if (*s && *s == c)
@@ -98,7 +98,7 @@ char	**ft_split(char const *s, char c)
 		{
 			strings[i] = word(s, c);
 			if (free_tab(strings, i))
-				error_function();
+				error_function(NULL, NULL);
 			i++;
 		}
 		while (*s && *s != c)

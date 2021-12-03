@@ -6,15 +6,17 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:19:43 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/03 14:24:11 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:54:13 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void free_cammands(char **cmd1, char **cmd2)
+void error_function(char **cmd1, char **cmd2)
 {
 	int i;
+
+	i = 0;
 	if(cmd1)
 	{
 		while(cmd1[i])
@@ -34,11 +36,7 @@ void free_cammands(char **cmd1, char **cmd2)
 		}
 		free(cmd2);
 	}
-}
-
-void	error_function(void)
-{
-	perror("Error !");
+	perror("pipex");
 	if(errno != 0)
 		exit(errno);
 	else
@@ -56,7 +54,7 @@ static void	main_process(char **envp, int *fd, char **cmd2, char *file2)
 	cmd2_path = get_path(envp, "PATH=", cmd2[0]);
 	fld = open(file2_path, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fld == -1)
-		error_function();
+		error_function(NULL, NULL);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fld, STDOUT_FILENO);
@@ -75,7 +73,7 @@ static void	child_process(char **envp, int *fd, char **cmd1, char *file1)
 	cmd1_path = get_path(envp, "PATH=", cmd1[0]);
 	fld = open(file1_path, O_RDONLY);
 	if (fld == -1)
-		error_function();
+		error_function(NULL, NULL);
 	close(fd[0]);
 	dup2(fld, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
@@ -92,19 +90,16 @@ int	main(int argc, char *argv[], char *envp[])
 	int		fd[2];
 
 	if (argc != 5)
-		error_function();
+		error_function(NULL, NULL);
 	if (pipe(fd) == -1)
-		error_function();
+		error_function(NULL, NULL);
 	command1 = ft_split(argv[2], ' ');
 	command2 = ft_split(argv[3], ' ');
 	if(!command1 || !command2)
-	{
-		free_cammands(command1, command2);
-		error_function();
-	}
+		error_function(command1, command1);
 	frk = fork();
 	if (frk == -1)
-		error_function();
+		error_function(NULL, NULL);
 	if (frk == 0)
 		child_process(envp, fd, command1, argv[1]);
 	else
