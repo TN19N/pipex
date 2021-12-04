@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 16:33:57 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/03 20:51:14 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/04 15:41:57 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,26 @@ char	*get_path(char **envp, char *to_find, char *cmd_or_file)
 {
 	char	*full_path;
 	char	**pathes;
-	int		len;
 	char	*the_path;
 
-	len = ft_strlen(to_find);
 	full_path = get_full_path(envp, to_find);
 	if (!full_path)
-		error_function(NULL, NULL);
-	if (len == 5)
+		return (NULL);
+	if (full_path[1] == 'A')
 	{
-		pathes = ft_split(full_path + len, ':');
+		if (access(cmd_or_file, F_OK) == 0)
+			return (cmd_or_file);
+		pathes = ft_split(full_path + 5, ':');
 		the_path = find_the_path(pathes, cmd_or_file);
 		if (!the_path)
-			error_function(NULL, NULL);
+			error_function(1, cmd_or_file);
 	}
 	else
 	{
 		full_path = ft_strjoin(full_path, "/");
 		if (!full_path)
-			error_function(NULL, NULL);
-		the_path = ft_strjoin(full_path + len, cmd_or_file);
+			error_function(0, NULL);
+		the_path = ft_strjoin(full_path + 4, cmd_or_file);
 	}
 	return (the_path);
 }
