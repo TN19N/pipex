@@ -6,7 +6,7 @@
 /*   By: mannouao <mannouao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 16:33:57 by mannouao          #+#    #+#             */
-/*   Updated: 2021/12/04 15:41:57 by mannouao         ###   ########.fr       */
+/*   Updated: 2021/12/04 21:13:43 by mannouao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*find_the_path(char **pathes, char *path_to_find)
 	{
 		path_plas = ft_strjoin(pathes[i], "/");
 		path_holder = ft_strjoin(path_plas, path_to_find);
-		check = access(path_holder, F_OK);
+		check = access(path_holder, X_OK);
 		free(path_plas);
 		if (check == 0)
 			return (path_holder);
@@ -57,30 +57,41 @@ static char	*get_full_path(char **envp, char *to_find)
 	return (NULL);
 }
 
-char	*get_path(char **envp, char *to_find, char *cmd_or_file)
+char	*get_path(char **envp, char *to_find, char *cmd)
 {
 	char	*full_path;
 	char	**pathes;
 	char	*the_path;
 
 	full_path = get_full_path(envp, to_find);
-	if (!full_path)
-		return (NULL);
-	if (full_path[1] == 'A')
+	if (full_path)
 	{
-		if (access(cmd_or_file, F_OK) == 0)
-			return (cmd_or_file);
+		if (access(cmd, F_OK) == 0)
+		{
+			if (access(cmd, X_OK) == -1)
+				return (NULL);
+			return (cmd);
+		}
 		pathes = ft_split(full_path + 5, ':');
-		the_path = find_the_path(pathes, cmd_or_file);
+		the_path = find_the_path(pathes, cmd);
 		if (!the_path)
-			error_function(1, cmd_or_file);
+			error_function(1, cmd);
+		return (the_path);
 	}
-	else
+	return (NULL);
+}
+
+void	extra_err_function(char *str)
+{
+	int	i;
+
+	i = 0;
+	ft_putstr_fd("pipex: Permission denied: ", 2);
+	while (str[i] && str[i] != ' ')
 	{
-		full_path = ft_strjoin(full_path, "/");
-		if (!full_path)
-			error_function(0, NULL);
-		the_path = ft_strjoin(full_path + 4, cmd_or_file);
+		write(2, &str[i], 1);
+		i++;
 	}
-	return (the_path);
+	write(2, "\n", 1);
+	exit(errno);
 }
